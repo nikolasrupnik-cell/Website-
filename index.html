@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nikolas Rupnik - Software Engineer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            scroll-behavior: smooth;
+            line-height: 1.6;
+        }
+
+        body.dark {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #f0f0f0;
+        }
+
+        nav {
+            background: linear-gradient(135deg, #2575fc 0%, #1e40af 100%);
+            padding: 15px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 0.95em;
+        }
+
+        nav a:hover {
+            color: #ffeb3b;
+            transform: translateY(-2px);
+        }
+
+        .toggle-btn {
+            cursor: pointer;
+            font-size: 1.3em;
+            transition: transform 0.3s;
+        }
+
+        .toggle-btn:hover {
+            transform: scale(1.2) rotate(20deg);
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(20px); }
+        }
+
+        header h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            font-size: 1.3em;
+            font-weight: 300;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 30px;
+        }
+
+        .profile-pic {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 20px auto;
+            display: block;
+            border: 5px solid white;
+            object-fit: cover;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s;
+        }
+
+        .profile-pic:hover {
+            transform: scale(1.05);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            transition: left 0.3s;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .card.dark {
+            background: #1f1f1f;
+            color: #f0f0f0;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .card.dark h2 {
+            color: #a78bfa;
+        }
+
+        .card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .card ul li {
+            padding: 10px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .card ul li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .card.dark ul li::before {
+            color: #a78bfa;
+        }
+
+        .skills-bar {
+            margin: 15px 0;
+        }
+
+        .skills-bar label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .skills-bar-bg {
+            background: #e0e0e0;
+            border-radius: 25px;
+            overflow: hidden;
+            height: 25px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .skills-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 25px;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 0%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            font-size: 0.8em;
+            font-weight: bold;
+            color: white;
+        }
+
+        body.dark .skills-bar-bg {
+            background: #333;
+        }
+
+        body.dark .skills-bar-fill {
+            background: linear-gradient(90deg, #a78bfa, #d084dc);
+        }
+
+        .hobby {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-weight: 500;
+            padding: 12px;
+            background: #f5f5f5;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .hobby:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .card.dark .hobby {
+            background: #2a2a2a;
+        }
+
+        .card.dark .hobby:hover {
+            background: #667eea;
+        }
+
+        .hobby-icon {
+            font-size: 1.8em;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        footer {
+            text-align: center;
+            background: linear-gradient(135deg, #2575fc 0%, #1e40af 100%);
+            color: white;
+            padding: 50px 20px;
+            margin-top: 80px;
+            box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        footer.dark {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        }
+
+        footer p {
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .social-links a,
+        .email-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid white;
+            min-width: 120px;
+        }
+
+        .social-links a {
+            background: transparent;
+            color: white;
+        }
+
+        .social-links a:hover {
+            background: white;
+            color: #2575fc;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .email-btn {
+            background: white;
+            color: #2575fc;
+        }
+
+        .email-btn:hover {
+            background: #ffeb3b;
+            border-color: #ffeb3b;
+            transform: translateY(-3px);
+        }
+
+        .gpa-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin: 10px 0;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5em;
+            }
+
+            nav {
+                gap: 15px;
+            }
+
+            main {
+                grid-template-columns: 1fr;
+            }
+
+            .social-links {
+                flex-direction: column;
+            }
+
+            .social-links a,
+            .email-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#about">About</a>
+        <a href="#education">Education</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#achievements">Achievements</a>
+        <a href="#hobbies">Interests</a>
+        <a href="#contact">Contact</a>
+        <span class="toggle-btn" onclick="toggleDarkMode()">🌙</span>
+    </nav>
+
+    <header>
+        <h1>Nikolas Rupnik</h1>
+        <p>Software Engineer | Cybersecurity | Ultimate Frisbee Player</p>
+        <img src="profilepic.jpg" alt="Nikolas Rupnik" class="profile-pic">
+
+    </header>
+
+    <main>
+        <div class="card" id="about">
+            <h2>About Me</h2>
+            <p>Hi! I'm Nikolas Rupnik, a junior at Indiana University of Pennsylvania studying software engineering with a minor in cybersecurity. I've been passionate about computers since a young age and excel in problem-solving through code. I'm driven by the satisfaction of building working solutions and collaborating with talented teams.</p>
+            <p style="margin-top: 15px;">I'm known for my dedication and hard work, always giving 100% effort on every project. I adapt well to different personalities, thrive in team environments, and maintain a strong commitment to continuous learning and growth. My goal is to become a skilled software engineer who can contribute meaningfully to impactful projects while helping others succeed.</p>
+        </div>
+
+        <div class="card" id="education">
+            <h2>Education</h2>
+            <p><strong>Indiana University of Pennsylvania</strong></p>
+            <p>B.S. in Software Engineering | Minor in Cybersecurity</p>
+            <p><strong>Expected Graduation:</strong> 2027</p>
+            <div class="gpa-badge">GPA: 3.94</div>
+            <p style="margin-top: 15px;"><strong>Relevant Coursework:</strong> Computer Networks, Cybersecurity, Software Engineering, Data Analysis</p>
+        </div>
+
+        <div class="card" id="projects">
+            <h2>Projects</h2>
+            <ul>
+                <li>Stock Market Analysis Tool - Built REST API integration for real-time market data</li>
+                <li>Basketball Statistics Organizer - Python application for athlete performance tracking</li>
+                <li>Data Analysis  -  projects using Python for sports analytics</li>
+                
+            </ul>
+        </div>
+
+        <div class="card" id="skills">
+            <h2>Technical Skills</h2>
+            
+            <div class="skills-bar">
+                <label>Python</label>
+                <div class="skills-bar-bg">
+                    <div class="skills-bar-fill" style="width: 90%;"></div>
+                </div>
+            </div>
+
+            <div class="skills-bar">
+                <label>Data Analysis</label>
+                <div class="skills-bar-bg">
+                    <div class="skills-bar-fill" style="width: 80%;"></div>
+                </div>
+            </div>
+
+            <div class="skills-bar">
+                <label>Cybersecurity</label>
+                <div class="skills-bar-bg">
+                    <div class="skills-bar-fill" style="width: 70%;"></div>
+                </div>
+            </div>
+
+            <div class="skills-bar">
+                <label>Networking</label>
+                <div class="skills-bar-bg">
+                    <div class="skills-bar-fill" style="width: 65%;"></div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 30px; color: #667eea; margin-bottom: 15px;">Professional Skills</h3>
+
+            <div class="skills-bar">
+                <label>Hard Working</label>
+                <div class="skills-bar-bg">
+                    <div class="skills-bar-fill" style="width: 95%;"></div>
+                </div>
+            </div>
+
+            <div class="skills-bar">
+                <label>Teamwork & Collaboration</label>
+                <div class="skills-bar-bg">
+                    <div class="skills-bar-fill" style="width: 90%;"></div>
+                </div>
+            </div>
+
+            <div class="skills-bar">
+                <label>Problem Solving</label>
+                <div class="skills-bar-bg">
+                    <div class="skills-bar-fill" style="width: 88%;"></div>
+                </div>
+            </div>
+
+            <div class="skills-bar">
+                <label>Communication</label>
+                <div class="skills-bar-bg">
+                    <div class="skills-bar-fill" style="width: 85%;"></div>
+                </div>
+            </div>
+
+            <div class="skills-bar">
+                <label>Adaptability</label>
+                <div class="skills-bar-bg">
+                    <div class="skills-bar-fill" style="width: 92%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="achievements">
+            <h2>Achievements</h2>
+            <ul>
+                <li>Maintaining a 3.94 GPA at IUP</li>
+                <li>Active captain of the Ultimate Frisbee team</li>
+                <li>Completed data analysis projects with Python</li>
+                <li>Pursuing cybersecurity and networking certifications</li>
+                <li>Strong problem-solving and collaborative skills</li>
+            </ul>
+        </div>
+
+        <div class="card" id="hobbies">
+            <h2>Interests & Hobbies</h2>
+            <div class="hobby">
+                <span class="hobby-icon">🥏</span>
+                <span>Playing Ultimate Frisbee</span>
+            </div>
+            <div class="hobby">
+                <span class="hobby-icon">💻</span>
+                <span>Programming & Coding Projects</span>
+            </div>
+            <div class="hobby">
+                <span class="hobby-icon">🔒</span>
+                <span>Cybersecurity & Network Security</span>
+            </div>
+            <div class="hobby">
+                <span class="hobby-icon">📊</span>
+                <span>Sports Data Analysis</span>
+            </div>
+            <div class="hobby">
+                <span class="hobby-icon">💪</span>
+                <span>Working Out & Lifting</span>
+            </div>
+            <div class="hobby">
+                <span class="hobby-icon">🎮</span>
+                <span>Playing Video Games</span>
+            </div>
+            <div class="hobby">
+                <span class="hobby-icon">📺</span>
+                <span>Watching Sports</span>
+            </div>
+        </div>
+    </main>
+
+    <footer id="contact">
+        <p style="font-size: 1.3em; margin-bottom: 25px;">Let's Connect</p>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/nikolas-rupnik-a35517346/" target="_blank">🔗 LinkedIn</a>
+            <a href="https://github.com/nikolasrupnik-cell" target="_blank">💾 GitHub</a>
+        </div>
+        <p style="margin-top: 30px; font-size: 1.1em; font-weight: 600;">📧 nikolasrupnik@gmail.com</p>
+        <p style="margin-top: 25px; font-size: 0.9em; opacity: 0.9;">© 2025 Nikolas Rupnik. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark');
+            document.querySelectorAll('.card').forEach(card => card.classList.toggle('dark'));
+            document.querySelector('header').classList.toggle('dark');
+            document.querySelector('footer').classList.toggle('dark');
+            document.querySelector('nav').classList.toggle('dark');
+        }
+
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.skills-bar-fill').forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 100);
+            });
+        });
+
+        // Smooth scroll offset for fixed nav
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
